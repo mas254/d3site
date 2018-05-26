@@ -14,7 +14,7 @@ The data we will be loading into R is the individual adult questionnaire answers
 
 To read this data into R using functions from base R, we can first use the **read.table** function. To read the data in correctly, we need to use *header = TRUE* as the first row of the data contains the names of the variables, and also *stringsAsFactors = FALSE*, which stops R from treating text variables as factors. We can convert these into factors later, when necessary.
 
-```{r cache = TRUE}
+```{r cache = TRUE, warning = FALSE, message = FALSE}
 UndSoc1 <- read.table("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab",
                       header = TRUE,
                       stringsAsFactors = FALSE)
@@ -26,7 +26,7 @@ Different types of files need to read into R differently. The **read.table** fun
 
 We can also read data into R using the package *readr*, part of the *tidyverse* package, with the **read_tsv** command. This is the equivalent command to **read.table** from base R.
 
-```{r cache = TRUE}
+```{r cache = TRUE, warning = FALSE, message = FALSE}
 # We can either load the entire 'tidyverse' package into R, which includes the readr package as well as others such as ggplot2, or just the 'readr' package on its own.
 
 library(readr)
@@ -34,23 +34,44 @@ library(readr)
 UndSoc2 <- read_tsv("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab")
 ```
 
-The readr package also allows us to read different types of files into R. The commands **read_csv** and **read_delim** read comma separated data and any data into R respectively.
+The readr package also allows us to read different types of files into R. The commands **read_csv** and **read_delim** read comma and any type of separated data into R respectively.
 
 ### Using the data.table package
 
-The **fread** function from the **data.table** package is probably the fastest way to read in the data. 
+The final way we are going to read this data into R is by using the **fread** function from the **data.table** package. The advantage of the **fread** command is that it can read any type of separated data into R, without you having to change anything if the file type you are trying to read changes.
 
-```{r cache = TRUE}
+```{r cache = TRUE, warning = FALSE, message = FALSE}
 library(data.table)
 
-system.time(UndSoc3 <- fread("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab"))
+UndSoc3 <- fread("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab")
 ```
 
-It took less than 3 seconds!
- 
-With small data sets the choice between these three methods is not very important, but with larger data the gain in efficiency that **readr** and **data.table** provide can be quite substantial.
+### Comparing these three methods
 
-## Other data formats
+One of the important differences between these three methods for reading data into R is the length of time they take to read the data. We can compare this by reading the data into R again, this time wrapping our code with the command **system.time**.
+
+```{r cache = TRUE, warning = FALSE, message = FALSE}
+# Base R
+system.time(UndSoc1 <- read.table("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab",
+                      header = TRUE,
+                      stringsAsFactors = FALSE))
+
+# It takes about 23 seconds to read the data into R using this method.
+
+# Package readr
+system.time(UndSoc2 <- read_tsv("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab"))
+
+# It takes only 5 seconds to read the data into R using this method.
+
+#Package data.table
+system.time(UndSoc3 <- fread("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab"))
+
+# It takes just 3 seconds to read the data into R using this method, a whole 20 seconds quicker than using the commands from base R!
+```
+
+From this we can see clear differences in loading time. With small data sets, the difference between these three methods will not be very noticeable or important, but with larger data the increase in loading times **readr** and **data.table** provide can be quite substantial.
+
+### Other data formats
 
 In R you can easily read in data in other formats, such as csv files, Stata, SPSS, SAS, Excel and others. There are many tutorials on how to do this on the web. See, for example, https://www.datacamp.com/courses/importing-data-in-r-part-1/ and https://www.datacamp.com/courses/importing-data-in-r-part-2 .
 
