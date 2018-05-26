@@ -1,42 +1,48 @@
 # Read data {#readdata}
 
-> Prerequisite: ch.11 (Data import) from R for Data Science - http://r4ds.had.co.nz/data-import.html
+> Prerequisite: Chapter 11 ‘Data Import’ from R for Data Science, available at http://r4ds.had.co.nz/data-import.html
 
-For this module we will use data from the Understanding Society survey (https://discover.ukdataservice.ac.uk/catalogue/?sn=6614). I assume that you have famliarised yourself with the data set, registered an account with the UK Data Service website and downloaded the data in the tab format.
+## Introduction to Reading Data
 
-The first thing we need to do is to read the data in R. There are multiple ways of doing this.
+Once you have downlaoded the data from the Understanding Society survey to your computer, the first thing you need to do is read the data into R. There are a number of ways to do this, and this class will cover loading data into R by using base R and both the readr and data.table packages.
 
-For all the examples I will use the individual adult data from wave 1 (*a_indresp.tab*).
+The data we will be loading into R is the individual adult questionnaire answers from wave 1 (*UKDA-6614-tab/tab/us_w1/a_indresp.tab*). This should be saved in the *data* folder you created in your project folder (this was covered in the Introduction).
 
-## Base R
+## Reading Data into R
 
-In base R we have the **read.table** function. I will wrap it into the **system.time** function to measure how long the execution will take.
+### Using base R
 
-```{r}
-system.time(UndSoc1 <- read.table("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab",
+To read this data into R using functions from base R, we can first use the **read.table** function. To read the data in correctly, we need to use *header = TRUE* as the first row of the data contains the names of the variables, and also *stringsAsFactors = FALSE*, which stops R from treating text variables as factors. We can convert these into factors later, when necessary.
+
+```{r cache = TRUE}
+UndSoc1 <- read.table("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab",
                       header = TRUE,
-                      stringsAsFactors = FALSE))
+                      stringsAsFactors = FALSE)
 ```
 
-I set *header = TRUE* to make sure that the first row in the data is interpreted as variable names. *stringsAsFacrors = FALSE* means that the text variables will be read in as character vectors rather than factors. We can convert them into factors when necessary.
+Different types of files need to read into R differently. The **read.table** function reads data that is *tab separated* (the file will be called 'name*.tab*'), the **read.csv** function reads data that is *comma separed* (the file will be called 'name*.csv*') and **read.delim** reads data that is separated in any way. These work in the same way, so once you've mastered one, you've mastered them all.
 
-## Package readr
+### Using the readr package
 
-We can also read in these data with the package **readr** (part of **tidyverse**). The main advantage is that it works faster.
+We can also read data into R using the package *readr*, part of the *tidyverse* package, with the **read_tsv** command. This is the equivalent command to **read.table** from base R.
 
-```{r}
+```{r cache = TRUE}
+# We can either load the entire 'tidyverse' package into R, which includes the readr package as well as others such as ggplot2, or just the 'readr' package on its own.
+
 library(readr)
-system.time(UndSoc2 <- read_tsv("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab"))
+
+UndSoc2 <- read_tsv("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab")
 ```
 
-**readr** was able to read the data set much faster than base R.
+The readr package also allows us to read different types of files into R. The commands **read_csv** and **read_delim** read comma separated data and any data into R respectively.
 
-## Package data.table
+### Using the data.table package
 
 The **fread** function from the **data.table** package is probably the fastest way to read in the data. 
 
-```{r}
+```{r cache = TRUE}
 library(data.table)
+
 system.time(UndSoc3 <- fread("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab"))
 ```
 
@@ -52,7 +58,7 @@ In R you can easily read in data in other formats, such as csv files, Stata, SPS
 
 Once you have read your data into R you can save it as R workspace.
 
-```{r}
+``{r cache = TRUE}
 # I will remove some objects from memory to speed things up
 rm(UndSoc2, UndSoc3)
 # saving R workspavce now in myData (you need to create myData first)
@@ -61,7 +67,7 @@ save.image("myData/readTest.RData")
 
 Next time I need this file I can simply load the workspace.
 
-```{r}
+``{r cache = TRUE}
 # first let's remove everything from the workspace
 rm(list = ls())
 # load the workspace
