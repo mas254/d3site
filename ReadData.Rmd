@@ -8,7 +8,7 @@ Once you have downlaoded the data from the Understanding Society survey to your 
 
 The data we will be loading into R is the individual adult questionnaire answers from wave 1 (*UKDA-6614-tab/tab/us_w1/a_indresp.tab*). This should be saved in the *data* folder you created in your project folder (this was covered in the Introduction).
 
-## Reading Data into R
+## Reading common data files into R
 
 ### Using base R
 
@@ -113,7 +113,9 @@ MissingData <- read.table("data/MissingData.txt",
 
 ## Reading other data files
 
-In R, you can also read data that was created in SPSS or Excel. Excel files are saved primarily as *.xls* or *.xlsx* files. Fortunately, after installing the **readxl** package, the command **read_excel** can read both formats into R. Using the example Excel document found at (https://github.com/abessudnov/dataanalysis3/blob/master/exData/tableExcel.xlsx), we can easily read this into R.
+### Excel
+
+In R, you can also read data that was created in Excel. Excel files are saved primarily as *.xls* or *.xlsx* files. Fortunately, after installing the **readxl** package, the command **read_excel** can read both formats into R. Using the example Excel document found at (https://github.com/abessudnov/dataanalysis3/blob/master/exData/tableExcel.xlsx), we can easily read this into R.
 
 ```{r cache = TRUE, warning = FALSE, message = FALSE}
 library(readxl)
@@ -149,6 +151,8 @@ We can now see that this dataset has true *NA* values in it for the missing data
 ```{r cache = TRUE, warning = FALSE, message = FALSE}
 head(Excel3)
 ```
+
+### SPSS
 
 ## Saving datasets
 
