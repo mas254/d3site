@@ -10,7 +10,9 @@ The data we will be loading into R is the individual adult questionnaire answers
 
 ## Reading common data files into R
 
-### Using base R
+### Ways to read data into R
+
+#### Using base R
 
 To read this data into R using functions from base R, we can first use the **read.table** function. To read the data in correctly, we need to use **header = TRUE** as the first row of the data contains the names of the variables, and also **stringsAsFactors = FALSE**, which stops R from treating text variables as factors. We can convert these into factors later, when necessary.
 
@@ -22,7 +24,7 @@ UndSoc1 <- read.table("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab",
 
 Different types of files need to read into R differently. The **read.table** function reads data that is *tab separated* (the file will be called 'name*.tab*'), the **read.csv** function reads data that is *comma separed* (the file will be called 'name*.csv*') and **read.delim** reads data that is separated in any way. These work in the same way, so once you've mastered one, you've mastered them all.
 
-### Using the readr package
+#### Using the readr package
 
 We can also read data into R using the package *readr*, part of the *tidyverse* package, with the **read_tsv** command. This is the equivalent command to **read.table** from base R.
 
@@ -36,7 +38,7 @@ UndSoc2 <- read_tsv("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab")
 
 The readr package also allows us to read different types of files into R. The commands **read_csv** and **read_delim** read comma and any type of separated data into R respectively.
 
-### Using the data.table package
+#### Using the data.table package
 
 The final way we are going to read this data into R is by using the **fread** function from the **data.table** package. The advantage of the **fread** command is that it can read any type of separated data into R, without you having to change anything if the file type you are trying to read changes.
 
@@ -79,7 +81,9 @@ It takes just 3 seconds to read the data into R using this method, a whole 20 se
 
 From this we can see clear differences in loading time. With small data sets, the difference between these three methods will not be very noticeable or important, but with larger data the increase in loading times **readr** and **data.table** provide can be quite substantial.
 
-### Skipping rows of data
+### Editing a dataset while reading it into R
+
+#### Skipping rows of data
 
 Sometimes we do not want to read in the entire dataset we have into R, but instead want to ignore the first few rows. For example, if we were to do some sentiment analysis on Hamlet (found here: http://www.gutenberg.org/cache/epub/2265/pg2265.html), we would want to only download the play itself, not the introductions before the start of the play. Once we've saved the play as a *.txt* file in our data folder, we can use the **skip** command to only read the file from a certain point.
 
@@ -89,18 +93,18 @@ Hamlet <- read.delim("data/Hamlet.txt",
                      header = FALSE)
 ```
 
-### Reading only select variables
+#### Reading only select variables
 
 When working with large datasets, like the one you will be using for your assignment, there are only certain variables that are of interest. As a result, it makes sense to only load these variables in, to make analysing your data easier to do.
 
-Let's say that we're interested in how political interest is distributed across the UK, and want to analyse how this is differentiated by sex, age and net monthly income. The variables we need to read into R are these three (*a_sex*, *a_dvage* and *a_fimnnet_dv*), as well as interest in politics (*a_vote6*) and the personal identification variable for each individual (*a_pidp*). We can use the **select** command to do this.
+Let's say that we're interested in how political interest is distributed across the UK, and want to analyse how this is differentiated by sex and age. The variables we need to read into R are these two (*a_sex* and *a_dvage*), as well as interest in politics (*a_vote6*) and the personal identification variable for each individual (*a_pidp*). We can use the **select** command to do this.
 
 ```{r cache = TRUE, warning = FALSE, message = FALSE}
 UndSoc4 <- fread("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab",
-                 select = c("pidp", "a_sex", "a_dvage", "a_fimnnet_dv", "a_vote6"))
+                 select = c("pidp", "a_sex", "a_dvage", "a_vote6"))
 ```
 
-### Setting *NA* values
+#### Setting *NA* values
 
 Sometimes, if we look at the raw data we are about to analyse, we see that there are a number of missing values. Instead of recoding these values as *NA* after we have loaded our data (found, in this example, at https://raw.githubusercontent.com/abessudnov/dataanalysis3/master/exData/Table3.txt), we can do this while reading our data into R using the **na.strings** command.
 
@@ -154,9 +158,40 @@ head(Excel3)
 
 ### SPSS
 
+As many people use SPSS instead of R to analyse data, there are times when you will have to use data that is intended for use in SPSS. However, the **haven** package allows us to do this, and as an example we will read a dataset combining data from the *Big Allied and Dangerous* and the *Global Terrorism Database* databases (found at http://vle.exeter.ac.uk/mod/resource/view.php?id=679842).
+
+```{r cache = TRUE, warning = FALSE, message = FALSE}
+library(haven)
+
+SPSS <- read_spss("data/BAAD and GTD merged.sav")
+```
+
 ## Saving datasets
 
-Once you have read your data into R you can save it as R workspace.
+Once you have read your data into R you can save it as a file so you can read it back into R at a later date to continue working on it. Again, there are a number of different ways to do this.
+
+### Ways to save data from R
+
+#### Saving data as a text file
+
+Having read the first wave of data into R with only the variables we are interested in (*Reading only select variables*), we can save this data as a text file using base R, without having to install any new packages. All we need to do is create a folder called *myData* in the folder where you have saved your project, and then you can save your dataset to this folder.
+
+```{r cache = TRUE, warning = FALSE, message = FALSE}
+write.csv(UndSoc4, "myData/UndSocA.csv")
+```
+
+As you had to get specific permission to access the *Understanding Society* dataset, it is important you do not save this data to Github. Add the following line to your *gitignore* file to keep the *myData* folder untracked:
+
+*myData/*
+
+#### Saving data as an Excel file
+
+#### Saving data as an R image
+
+#### Saving data as an R file
+
+### Comparing these methods
+
 
 
 # I will remove some objects from memory to speed things up
