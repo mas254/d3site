@@ -148,6 +148,8 @@ To fix this, we need to set both these values as *NA*, which we can do with the 
 Excel3 <- read_excel("data/tableExcel.xlsx",
                      sheet = 2,
                      na = c('NA', '"NA"'))
+
+# Note that as one of the missing values is called <"NA">, you have to use inverted commas ('') around the entire value for R to change it to an 'NA' value, rather than the usual speech marks (""). Inverted commas and speech marks are interchangable in R, though if you use one to open a command, you cannot use the other to close it.
 ```
 
 We can now see that this dataset has true *NA* values in it for the missing data.
@@ -186,12 +188,12 @@ This applies to every method of saving data from R we will cover here.
 
 ### Saving data as an Excel file
 
-To save our data as an Excel file, we need to first install the *xlsx* package, and use the command **write.xlsx()**.
+To save our data as an Excel file, we need to first install the *writexl* package, and use the command **write_xlsx()**.
 
 ```{r cache = TRUE, warning = FALSE, message = FALSE}
-library(xlsx)
+library(writexl)
 
-write.xlsx(UndSoc.4, "myData/UndSocEx.xlsx", sheetName="Example")
+write_xlsx(UndSoc.4, path = 'myData/UndSoc.4.xlsx', col_names = TRUE)
 ```
 
 ### Saving data as an SPSS file
@@ -229,6 +231,10 @@ load("myData/Workspace.RData")
 For your assignment, you are required to analyse at least two waves of data from the Understanding Soceity dataset. We will cover how to join multiple waves together in a future lesson, but before doing this, let's read in the first to waves of Understanding Society. To do this, we need to use the function **read_tsv()** from the readr package, as the data are tab separated. We will do load this by attaching the *tidyverse* package (you will need to install the tidyverse package first if you have not already done so, with the **install.packages()** function), as we will be using other packages within *tidyverse* in our analysis later.
 
 ```{r cache = TRUE, warning = FALSE, message = FALSE}
+# First, we clear the current workspace
+
+rm(list = ls())
+
 # This code attaches the tidyverse package and then reads the first two waves of Understanding Society separately into R.
 
 library(tidyverse)
@@ -278,7 +284,7 @@ By using what we covered earlier, we can select only the variables we want to re
 UndSoc1ed <- fread("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab",
                  select = c("pidp", "a_sex", "a_dvage", "a_vote6"))
 
-UndSoc2ed <- fread("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab",
+UndSoc2ed <- fread("data/UKDA-6614-tab/tab/us_w2/b_indresp.tab",
                  select = c("pidp", "b_sex", "b_dvage", "b_vote6"))
 ```
 
@@ -300,10 +306,8 @@ As we no longer have any use for the original data we loaded into R, we can remo
 rm(UndSoc1, UndSoc2)
 ```
 
-We can then save these datasets so we can easily load them into R at a later date to continue working on them. We will use these in future classes.
+We can then save these datasets so we can easily load them into R at a later date to continue working on them. We will use these in future classes. Here, we save the workspace, which includes just waves 1 and 2 of the Understanding Society data.
 
 ```{r cache = TRUE, warning = FALSE, message = FALSE}
-write.csv(UndSoc1ed, "myData/UndSocA.csv")
-
-write.csv(UndSo2ed, "myData/UndSocA.csv")
+save.image("myData/ReadData.RData")
 ```
