@@ -210,7 +210,7 @@ To read any of these datasets back into R, use what you learnt in *Reading commo
 
 ## Saving the working environment
 
-If you want ot save an entire workspace, rather than just individual files, we can use the command **save.image()** to do this. This saves not only data frames but any saved objects: models, plots, functions, etc.
+If you want to save an entire workspace, rather than just individual files, we can use the command **save.image()** to do this. This saves not only data frames but any saved objects: models, plots, functions, etc.
 
 ```{r cache = TRUE, warning = FALSE, message = FALSE}
 # Saving the workspace
