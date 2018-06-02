@@ -226,7 +226,7 @@ rm(list = ls())
 load("myData/Workspace.RData")
 ```
 
-## Reading in multiple waves of Understanding Society
+## Reading in multiple waves from Understanding Society
 
 For your assignment, you are required to analyse at least two waves of data from the Understanding Soceity dataset. We will cover how to join multiple waves together in a future lesson, but before doing this, let's read in the first to waves of Understanding Society. To do this, we need to use the function **read_tsv()** from the readr package, as the data are tab separated. We will do load this by attaching the *tidyverse* package (you will need to install the tidyverse package first if you have not already done so, with the **install.packages()** function), as we will be using other packages within *tidyverse* in our analysis later.
 
