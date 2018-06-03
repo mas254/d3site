@@ -180,11 +180,9 @@ Having read the first wave of data into R with only the variables we are interes
 write.csv(UndSoc.4, "myData/UndSoc.4.csv")
 ```
 
-As you had to get specific permission to access the *Understanding Society* dataset, it is important you do not save this data to Github. Add the following line to your *gitignore* file to keep the *myData* folder untracked:
+As you had to get specific permission to access the *Understanding Society* dataset, it is important you do not save this data to Github. This applies to every method of saving data from R we will cover here. Add the following line to your *gitignore* file to keep the *myData* folder untracked:
 
 **myData/**
-
-This applies to every method of saving data from R we will cover here.
 
 ### Saving data as an Excel file
 
