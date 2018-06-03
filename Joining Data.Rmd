@@ -8,7 +8,7 @@ When you work with data, it is rare that all the data you need will be confined 
 
 This is very relevant for your assignment, as you are required to work with multiple waves of the Understanding Society data set. Without being able to join these waves together, you will struggle to analyse more than one wave at a time.
 
-This class will teach you a number of ways to do this. We will start by joining just two waves together in the four ways introduced in Chapter 13 of R for Data Science into one, easy to work with, table. The next class will focus on joining multiple waves together at once.
+This class will teach you a number of ways to do this. We will start by joining just two waves together in the four ways introduced in *Chapter 13* of *R for Data Science* into one, easy to work with, table. The next class will focus on joining multiple waves together at once.
 
 ## Joining waves 1 and 2
 
