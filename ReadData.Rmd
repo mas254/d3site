@@ -4,7 +4,7 @@
 
 ## Introduction to Reading Data
 
-Once you have downlaoded the data from the Understanding Society survey to your computer, the first thing you need to do is read the data into R. There are a number of ways to do this, and this class will cover loading data into R by using base R and both the readr and data.table packages.
+Once you have downloaded the data from the Understanding Society survey, the first thing you need to do is read the data into R. There are a number of ways to do this, and this class will cover loading data into R by using base R and both the readr and data.table packages.
 
 The data we will be loading into R is the individual adult questionnaire answers from wave 1 (*UKDA-6614-tab/tab/us_w1/a_indresp.tab*). This should be saved in the *data* folder you created in your project folder (this was covered in the Introduction section to the course).
 
@@ -22,7 +22,7 @@ UndSoc.1 <- read.table("data/UKDA-6614-tab/tab/us_w1/a_indresp.tab",
                       stringsAsFactors = FALSE)
 ```
 
-Different types of files need to read into R in different ways. The **read.table()** function reads data that is *tab separated* (the file will be called 'name*.tab*'), the **read.csv()** function reads data that is *comma separed* (the file will be called 'name*.csv*') and **read.delim()** reads data that is separated in any way. These work in the same way, so once you've mastered one, you've mastered them all.
+Different types of files need to read into R in different ways. The **read.table()** function reads data that is *tab separated* (the file will be called 'name*.tab*'), the **read.csv()** function reads data that is *comma separated* (the file will be called 'name*.csv*') and **read.delim()** reads data that is separated in any way. These work in the same way, so once you've mastered one, you've mastered them all.
 
 #### Using the readr package
 
@@ -95,7 +95,7 @@ Hamlet <- read.delim("data/Hamlet.txt",
 
 #### Reading only select variables
 
-When working with large datasets, like the one you will be using for your assignment, there are only certain variables that are of interest. As a result, it makes sense to only load these variables in, to make analysing your data easier to do.
+When working with large datasets, like the one you will be using for your assignment, there are only certain variables that are of interest. As a result, it makes sense to load in only these variables, to make analysing your data easier to do.
 
 Let's say that we're interested in how political interest is distributed across the UK, and want to analyse how this is differentiated by sex and age. The variables we need to read into R are these two (*a_sex* and *a_dvage*), as well as interest in politics (*a_vote6*) and the personal identification variable for each individual (*a_pidp*). We can use the **select = ""** command to do this.
 
@@ -226,7 +226,7 @@ load("myData/Workspace.RData")
 
 ## Reading in multiple waves from Understanding Society
 
-For your assignment, you are required to analyse at least two waves of data from the Understanding Soceity dataset. We will cover how to join multiple waves together in a future lesson, but before doing this, let's read in the first to waves of Understanding Society. To do this, we need to use the function **read_tsv()** from the readr package, as the data are tab separated. We will do load this by attaching the *tidyverse* package (you will need to install the tidyverse package first if you have not already done so, with the **install.packages()** function), as we will be using other packages within *tidyverse* in our analysis later.
+For your assignment, you are required to analyse at least two waves of data from the Understanding Society dataset. We will cover how to join multiple waves together in a future lesson, but before doing this, let's read in the first two waves of Understanding Society. To do this, we need to use the function **read_tsv()** from the readr package, as the data are tab separated. We will load this by attaching the *tidyverse* package (you will need to install the tidyverse package first if you have not already done so, with the **install.packages()** function), as we will be using other packages within *tidyverse* in our analysis later.
 
 ```{r cache = TRUE, warning = FALSE, message = FALSE}
 # First, we clear the current workspace.
