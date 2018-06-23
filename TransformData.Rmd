@@ -29,11 +29,11 @@ Relational operators are used when comparing values, and will help with selectin
 Operator | Description
 -------- | -----------
 < | Less than
-> | Greater than
+```>``` | Greater than
 <! | Not less than
->! | Not greater than
+```>!``` | Not greater than
 <= | Less than or equal to
->= | Greater than or equal to
+```>=``` | Greater than or equal to
 == | Equal to
 != | Not equal to
 
