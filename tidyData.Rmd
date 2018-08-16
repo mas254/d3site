@@ -45,8 +45,8 @@ UndSocExample %>%
 
 # Then, we split the 'variable' column into separate columns for each variable and 'cast' these new columns in the long format.
 
-UndSocExample %>%
-  gather(a_sex:b_vote6, key = "variable", value = "value") %>%
+UndSocLongExample <- UndSocExample %>%
+  gather(a_sex:b_fimnnet_dv, key = "variable", value = "value") %>%
   separate(variable, into = c("wave", "variable"), sep = "_", extra = "merge") %>%
   spread(key = variable, value = value)
 
@@ -58,11 +58,11 @@ If we want to restructure our data back to the wide format from the long format,
 ```{r cache = TRUE}
 # The data in its 'long' format:
 
-UndSocExample
+UndSocLongExample
 
 # Here, we again use the 'gather' command to 'melt' the data frame, putting every variable on a new row, then 'cast' these new rows in the 'wide' data format.
 
-UndSocExampleLong %>%
+UndSocLongExample %>%
   gather(dvage:vote6, key = "variable", value = "value") %>%
   unite("variable", c("wave", "variable"), sep = "_") %>%
   spread(key = variable, value = value)
@@ -70,7 +70,7 @@ UndSocExampleLong %>%
 # The key command here is the 'unite' command, which takes the letter representing the wave from which the data was taken, and recombines this with each variable, meaning each variable has a letter in front of it that represents the wave the data is from.
 ```
 
-### IS THIS THE ONLY WAY TO FIX THE FIMNNET_DV ISSUE?
+### THIS SECTION TO DO (check explanation of ifelse and recode is clear as well)
 
 To move from the wide to the long format we can use the function **melt** and **dcast** functions from the **reshape2** package. **gather** is roughy equivalent to **melt** and **spread** is roughy equivalent to **dcast**.
 
