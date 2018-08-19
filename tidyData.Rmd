@@ -3,7 +3,7 @@
 > Prerequisite: Chapter 12 ‘Tidy data’ from R for Data Science, available at http://r4ds.had.co.nz/tidy-data.html.
 
 
-In the previous part of the course (joiningData.Rmd) we learned how to join together data from seven waves of the Understanding Society. Let us open this data set.
+Earlier in this course (entitiled 'Join Data') we learned how to join together data from seven waves of the Understanding Society. Let us open this data set.
 
 ```{r cache = TRUE}
 UndSoc <- readRDS("myData/all7.rds")
@@ -29,9 +29,9 @@ UndSocExample <- UndSoc %>%
 UndSocExample
 ```
 
-These are the data for two individuals only in waves 1 and 2, presented in the 'wide' format. This means that we have one row for each individual, and data from different waves are recorded in several columns. For example, the data on sex from wave 1 is in column *a_sex* and the data on sex from wave 2 is in column *b_sex*. This quite literally makes the table of the data wider than if each wave was represented by a new row, which would instead make the table longer and norrower.
+These are the data for two individuals only in waves 1 and 2, presented in the 'wide' format. This means that we have one row for each individual, and data from different waves are recorded in several columns. For example, the data on sex from wave 1 is in column *a_sex* and the data on sex from wave 2 is in column *b_sex*. This quite literally makes the table of the data wider than if each wave was represented by a new row, which would instead make the table longer and narrower.
 
-In longitudinal data sets, it is common to find data presented in this 'wide' format. While this may be convenient for certain purposes, but it is generally recommended to work with data in the 'long' format (that corresponds to the tidy data principles as described in the R for Data Science book).
+In longitudinal data sets, it is common to find data presented in this 'wide' format. While this may be convenient for certain purposes, it is generally recommended to work with data in the 'long' format (that corresponds to the 'tidy data' principles as described in the *R for Data Science* book).
 
 ### Reshaping the data
 
@@ -76,9 +76,9 @@ UndSocLongExample %>%
 # The key command here is the 'unite' command, which takes the letter representing the wave from which the data was taken, and recombines this with each variable, meaning each variable has a letter in front of it that represents the wave the data is from.
 ```
 
-### Reshaping the data using the reshape2 package (check explanation of ifelse and recode is clear as well)
+### Reshaping the data using the reshape2 package
 
-To move from the 'wide' to the 'long' format we can also use the functions **melt** and **dcast**, from the **reshape2** package. The **melt** function is roughy equivalent to **gather** and the **dcast** function is roughy equivalent to **spread**.
+To move from the 'wide' to the 'long' format we can also use the functions **melt** and **dcast**, from the **reshape2** package. The **melt** function is roughly equivalent to **gather** and the **dcast** function is roughly equivalent to **spread**.
 
 ```{r cache = TRUE}
 # You can use require() to install packages if and only if they are necessary in your code.
@@ -149,7 +149,7 @@ head(UndSocLong, 5)
 
 ## Cleaning the data
 
-Before we begin the analysis we want to make sure that the data have been cleaned and all the missing values have been correctly identified. It usually makes sense to separate the cleaning and analysis stages into separate scripts.
+Before we begin the analysis, we want to make sure that the data have been cleaned and all the missing values have been correctly identified. It usually makes sense to separate the cleaning and analysis stages into separate scripts.
 
 Let us explore the data set we have. Note that if we had not converted the data into the 'long' format we would have to tabulate and clean each variable seven times.
 
@@ -186,7 +186,7 @@ table(UndSocLong$vote6)
 
 We also have negative values for income (**fimnnet_dv**), but we will leave as it is for now.
 
-We may also want to code *sex* as 'male' and 'female' and assign meaningful labels to *vote6*.
+We may want to code *sex* as 'male' and 'female' and assign meaningful labels to *vote6*.
 
 ```{r cache = TRUE}
 UndSocLongClean <- UndSocLong %>%
@@ -196,7 +196,7 @@ UndSocLongClean <- UndSocLong %>%
 head(UndSocLongClean, 10)
 ```
 
-You will have noticed that we used the **ifelse** command to code the negative values from the *dvage*, *sex* and *vote6* variables as missing values, whereas we used the **recode** command to assign labels to the values in the data for the *sex* and *vote6* variables. This is because the **ifelse** function works with conditional statements, used in creating *NA* values for missing numbers, and the **recode** function requires fewer lines of code to recode multiple values in a variable, as it can simply reassign values, rather than having to set values to a number of conditional statements (explained in *Transform Data*, section 6 *Recode variables Both base R and dplyr using ifelse*).
+You will have noticed that we used the **ifelse** command to code the negative values from the *dvage*, *sex* and *vote6* variables as missing values, whereas we used the **recode** command to assign labels to the values in the data for the *sex* and *vote6* variables. This is because the **ifelse** function works with conditional statements (used in creating *NA* values for missing numbers) and the **recode** function requires fewer lines of code to recode multiple values in a variable, as it can simply reassign values, rather than having to set values to a number of conditional statements (explained in *Transform Data*, section 6 *Recode variables Both base R and dplyr using ifelse*).
 
 Finally, we save this cleaned data in our *myData* folder, as *all7clean*.
 
